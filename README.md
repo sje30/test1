@@ -1,5 +1,11 @@
 # test1
 
+```
+devtools::install_github("sje30/test1")
+```
+
+# why another package?
+
 This package is a testing ground for converting the C code from sjemea
 over to RCpp.  This is non-trivial, as it seems that I cannot include
 C code written in the .C() style with RCpp code.
