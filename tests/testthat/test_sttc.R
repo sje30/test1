@@ -5,7 +5,7 @@ expect_equal( sttc(1:5, double(0)), NaN)
 
 context("Tiling coefficent should return 1 for autocorrelated trains.")
 
-poisson.train <- function(n=1000, rate=1, beg=0) {
+poisson.train <- function(n = 1000, rate = 1, beg = 0) {
   ## Generate a Poisson spike train with N spikes and firing rate RATE.
   ## BEG is time of start of recording
   ## Check that the histogram looks exponentially distributed.
@@ -26,7 +26,7 @@ poisson.train <- function(n=1000, rate=1, beg=0) {
 n <-  5000
 rates <- c(0.3, 1, 2, 5, 10)
 for (r in rates) {
-  t <- poisson.train(n, r, beg=300)
+  t <- poisson.train(n, r, beg = 300)
   expect_equal( sttc(t, t), 1)
 }
 
@@ -40,21 +40,21 @@ context("Tiling coefficent should return 0 for two independent Poisson trains.")
 tiling.ind <- function()  {
   n <- 3000; r <- 0.2
   ## Compute tiling for a pair of Poisson trains -- should be close to zero.
-  a <- poisson.train(n, r, beg=300)
-  b <- poisson.train(n, r, beg=300)
+  a <- poisson.train(n, r, beg = 300)
+  b <- poisson.train(n, r, beg = 300)
   sttc(a, b)
 }
 
 coefs <- replicate(1000, tiling.ind())
 hist(coefs)
-percentiles <- quantile(coefs, probs=c(0.05, 0.95))
+percentiles <- quantile(coefs, probs = c(0.05, 0.95))
 expect_true(max(abs(percentiles)) < 0.02)
 expect_true( prod(percentiles) < 0)     #check opposite signs.
 
 
 context("Introducing some correlation between pairs of trains.")
 
-tiling.shared <- function(p.shared=0.6, n=2000, r=1) {
+tiling.shared <- function(p.shared = 0.6, n = 2000, r = 1) {
   master <- poisson.train(n, r)
   p.own <- (1-p.shared)/2
   p <- c( p.own, p.own, p.shared)
@@ -62,46 +62,46 @@ tiling.shared <- function(p.shared=0.6, n=2000, r=1) {
   ## 1: in train 1 only.
   ## 2: in train 2 only.
   ## 3: in both trains
-  state <- sample(1:3, n, replace=TRUE, prob=p)
+  state <- sample(1:3, n, replace = TRUE, prob = p)
   a <- master[state != 2]
   b <- master[state != 1]
   sttc(a, b)
 }
 
-p.shared <- seq(from=0, to=1, length=100)
+p.shared <- seq(from = 0, to = 1, length = 100)
 coef <- sapply(p.shared, tiling.shared)
-plot(p.shared, coef, pch=20, main='This should monotonically increase')
+plot(p.shared, coef, pch = 20, main = 'This should monotonically increase')
 expect_true( abs(coef[1]) < 0.1)
 expect_equal( coef[length(coef)], 1)
 
 
 
 context("Anti-correlated trains.")
-tiling.anti <- function(dt=0.05, n=2000) {
-  master <- seq(from=0, by=0.5, length=n)
+tiling.anti <- function(dt = 0.05, n = 2000) {
+  master <- seq(from = 0, by = 0.5, length = n)
   odd <- rep_len(c(TRUE, FALSE), n)
   a <- master[odd]
   b <- master[!odd]
   sttc(a,b,dt)
 }
 
-dts <- seq(from=0.05, to=1.0, length=100)
+dts <- seq(from = 0.05, to = 1.0, length = 100)
 dts <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
 coeff <- sapply(dts, tiling.anti)
-plot(dts, coeff, pch=20, type='b')
+plot(dts, coeff, pch = 20, type = 'b')
 ## We get NaN for dt=0.5 and dt=1 second.
 
 context("Symmetric calculation")
 n <-  5000
 rates <- c(0.3, 1, 2, 5, 10)
 for (r in rates) {
-  t1 <- poisson.train(n, r, beg=300)
-  t2 <- poisson.train(n, r, beg=300)
+  t1 <- poisson.train(n, r, beg = 300)
+  t2 <- poisson.train(n, r, beg = 300)
   expect_equal( sttc(t1, t2), sttc(t2, t1))
 }
 
 
-context("Checking the rec.time works")
+context("Checking the rec_time works")
 
 ## Generate a pair of uncorrelated trains, a and b.
 ## Then make trains a' and b' by simply adding a constant Z to all times.
@@ -111,8 +111,8 @@ z <- 5000;                              #large offset for 2nd set of trains
 for (i in seq_len(10)) {
   a <- sort(runif(n, beg, end))
   b <- sort(runif(n, beg, end))
-  c1 <- sttc(a, b, rec.time=c(beg, end))
-  c2 <- sttc(a+z, b+z, rec.time=z + c(beg, end))
+  c1 <- sttc(a, b, rec_time = c(beg, end))
+  c2 <- sttc(a+z, b+z, rec_time = z + c(beg, end))
   all.equal(c1, c2)
 }
 
@@ -121,21 +121,7 @@ context("Pathological corner case with synthetic trains")
 ## What should we do about this case?  Unlikely to happen for
 ## realistic trains.
 a <- 1; b <- 2                          # one spike in each time.
-expect_equal(sttc(a, b, dt=1, rec.time=c(0, 3)), 1)
-expect_equal(sttc(a, b, dt=1), NaN) #is this correct?!?
+expect_equal(sttc(a, b, dt = 1, rec_time = c(0, 3)), 1)
+expect_equal(sttc(a, b, dt = 1), NaN) #is this correct?!?
 
-
-## context("Check the array wide computation")
-
-
-## data.file <- system.file("examples", "P9_CTRL_MY1_1A.txt",
-##                          package = "sjemea")
-## s <- jay.read.spikes(data.file)
-## system.time(t1 <- tiling.allpairwise.old(s))
-## system.time(t2 <- tiling.allpairwise(s))
-## require(lattice)
-## levelplot(t1)
-## levelplot(t2)
-## u <- upper.tri(t1, diag=TRUE)
-## expect_equal(t1[u], t2[u])
 
