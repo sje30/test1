@@ -18,14 +18,12 @@
   ## Each bin is of the form [t, t+dt) I believe, as shown by:
   ## .spikes.to.count3(list( c(0, 6.9), c( 2, 4)))
   
-  ## time.breaks <- seq(from=beg, to=end, by=time.interval)
   nbins <- ceiling( (end-beg) / time.interval)
 
-  nspikes <- sapply(spikes, length)     #already computed elsewhere!
-  count = count_ns(spikes, beg, end, time.interval, nbins)
+  count <- count_ns(spikes, beg, end, time.interval, nbins)
 
   ## Return counts as a time series.
-  res <- ts(data=count, start=beg, deltat=time.interval)
+  res <- ts(data = count, start = beg, deltat = time.interval)
 
   res
 }
