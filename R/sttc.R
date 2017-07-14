@@ -7,7 +7,7 @@
 ##' @param a first spike train
 ##' @param b second spike train
 ##' @param dt bin size in seconds
-##' @param rec.time 2-element vector: start and end time 
+##' @param rec_time 2-element vector: start and end time 
 ##' @return STTC a scalar bounded between -1 and +1.
 ##' @author Stephen J Eglen
 ##' @examples
@@ -16,9 +16,9 @@
 ##' c = a+0.5
 ##' sttc(a, b)==1
 ##' sttc(a, c)==0
-sttc <- function(a, b, dt=0.05, rec.time=NULL) {
-  if (is.null(rec.time)) {
-    rec.time <- range(c(a, b))
+sttc <- function(a, b, dt = 0.05, rec_time = NULL) {
+  if (is.null(rec_time)) {
+    rec_time <- range(c(a, b))
   }
-  run_TMcpp(dt, rec.time[1], rec.time[2], a, b)
+  run_TMcpp(dt, rec_time[1], rec_time[2], a, b)
 }
