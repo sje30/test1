@@ -1,5 +1,7 @@
 # test1
 
+[![Travis-CI Build Status](https://travis-ci.org/sje30/test1.svg?branch=master)](https://travis-ci.org/sje30/test1)
+
 ```
 devtools::install_github("sje30/test1")
 ```
