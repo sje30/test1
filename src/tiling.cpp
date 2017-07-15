@@ -341,6 +341,8 @@ NumericVector tiling_correlogramcpp_index(NumericVector spikes,
 # dev.off()
 */
 
+
+
 // SJE additions
 
 // [[Rcpp::export]]
@@ -359,4 +361,31 @@ NumericMatrix sttc_allspikes1(List spikes, double dt, double beg, double end) {
     }
   }
   return m;
+}
+
+// [[Rcpp::export]]
+NumericVector sttcp_ab(NumericVector a,
+		       NumericVector b,
+		       double start,
+		       double end,
+		       double dt,
+		       double tau_sep,
+		       double tau_max) {
+
+  int n1, n2, k, l, j, i;
+  int tau_length = (int)((2*tau_max)/tau_sep+1.5);
+  NumericVector corrs(tau_length);
+  double start_tau, end_tau, tau;
+  
+  for (i=0; i<tau_length; i++) {
+
+    tau = -tau_max + (i*tau_sep);
+
+    start_tau = start - heaviside_thetacpp(tau);
+    end_tau = end + heaviside_thetacpp(-tau);
+    corrs[i] = run_TMcpp(dt,start_tau,end_tau,a,b-tau);
+  
+  }
+
+  return(corrs);
 }
