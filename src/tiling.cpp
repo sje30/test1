@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
 double run_Pcpp(double dt,
              NumericVector spike_times_1,
              NumericVector spike_times_2){
@@ -39,7 +38,6 @@ double run_Pcpp(double dt,
   return Nab;
 }
 
-// [[Rcpp::export]]
 double heaviside_thetacpp(double x){
   
   /* returns x if x positive and 0 otherwise */
@@ -48,7 +46,6 @@ double heaviside_thetacpp(double x){
   return y;
 }
 
-// [[Rcpp::export]]
 double run_Tcpp(double dt, double start, double end,
                 NumericVector spike_times_1){
   
@@ -126,7 +123,6 @@ double run_TMcpp(double dt, double start, double end,
   return(sttc);
 }
 
-// [[Rcpp::export]]
 NumericVector tiling_arrcpp(NumericVector spikes,
                             int n,
                             IntegerVector nspikes,
