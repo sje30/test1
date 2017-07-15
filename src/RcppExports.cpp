@@ -5,35 +5,18 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP test1_rcpp_hello_world() {
+// count_ns
+NumericVector count_ns(List spikes, double beg, double end, double wid, double nbins);
+RcppExport SEXP test1_count_ns(SEXP spikesSEXP, SEXP begSEXP, SEXP endSEXP, SEXP widSEXP, SEXP nbinsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_hello_world2
-List rcpp_hello_world2();
-RcppExport SEXP test1_rcpp_hello_world2() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world2());
-    return rcpp_result_gen;
-END_RCPP
-}
-// make_mat
-NumericMatrix make_mat(int r, int c);
-RcppExport SEXP test1_make_mat(SEXP rSEXP, SEXP cSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type r(rSEXP);
-    Rcpp::traits::input_parameter< int >::type c(cSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_mat(r, c));
+    Rcpp::traits::input_parameter< List >::type spikes(spikesSEXP);
+    Rcpp::traits::input_parameter< double >::type beg(begSEXP);
+    Rcpp::traits::input_parameter< double >::type end(endSEXP);
+    Rcpp::traits::input_parameter< double >::type wid(widSEXP);
+    Rcpp::traits::input_parameter< double >::type nbins(nbinsSEXP);
+    rcpp_result_gen = Rcpp::wrap(count_ns(spikes, beg, end, wid, nbins));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -52,56 +35,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// make_mat1
-NumericMatrix make_mat1(int r, int c);
-RcppExport SEXP test1_make_mat1(SEXP rSEXP, SEXP cSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type r(rSEXP);
-    Rcpp::traits::input_parameter< int >::type c(cSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_mat1(r, c));
-    return rcpp_result_gen;
-END_RCPP
-}
-// run_Pcpp
-double run_Pcpp(double dt, NumericVector spike_times_1, NumericVector spike_times_2);
-RcppExport SEXP test1_run_Pcpp(SEXP dtSEXP, SEXP spike_times_1SEXP, SEXP spike_times_2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type spike_times_1(spike_times_1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type spike_times_2(spike_times_2SEXP);
-    rcpp_result_gen = Rcpp::wrap(run_Pcpp(dt, spike_times_1, spike_times_2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// heaviside_thetacpp
-double heaviside_thetacpp(double x);
-RcppExport SEXP test1_heaviside_thetacpp(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(heaviside_thetacpp(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// run_Tcpp
-double run_Tcpp(double dt, double start, double end, NumericVector spike_times_1);
-RcppExport SEXP test1_run_Tcpp(SEXP dtSEXP, SEXP startSEXP, SEXP endSEXP, SEXP spike_times_1SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
-    Rcpp::traits::input_parameter< double >::type start(startSEXP);
-    Rcpp::traits::input_parameter< double >::type end(endSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type spike_times_1(spike_times_1SEXP);
-    rcpp_result_gen = Rcpp::wrap(run_Tcpp(dt, start, end, spike_times_1));
-    return rcpp_result_gen;
-END_RCPP
-}
 // run_TMcpp
 double run_TMcpp(double dt, double start, double end, NumericVector spike_times_1, NumericVector spike_times_2);
 RcppExport SEXP test1_run_TMcpp(SEXP dtSEXP, SEXP startSEXP, SEXP endSEXP, SEXP spike_times_1SEXP, SEXP spike_times_2SEXP) {
@@ -114,23 +47,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type spike_times_1(spike_times_1SEXP);
     Rcpp::traits::input_parameter< NumericVector >::type spike_times_2(spike_times_2SEXP);
     rcpp_result_gen = Rcpp::wrap(run_TMcpp(dt, start, end, spike_times_1, spike_times_2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// tiling_arrcpp
-NumericVector tiling_arrcpp(NumericVector spikes, int n, IntegerVector nspikes, IntegerVector first_spike, double start, double end, double dt);
-RcppExport SEXP test1_tiling_arrcpp(SEXP spikesSEXP, SEXP nSEXP, SEXP nspikesSEXP, SEXP first_spikeSEXP, SEXP startSEXP, SEXP endSEXP, SEXP dtSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type spikes(spikesSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type nspikes(nspikesSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type first_spike(first_spikeSEXP);
-    Rcpp::traits::input_parameter< double >::type start(startSEXP);
-    Rcpp::traits::input_parameter< double >::type end(endSEXP);
-    Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
-    rcpp_result_gen = Rcpp::wrap(tiling_arrcpp(spikes, n, nspikes, first_spike, start, end, dt));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -190,16 +106,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"test1_rcpp_hello_world", (DL_FUNC) &test1_rcpp_hello_world, 0},
-    {"test1_rcpp_hello_world2", (DL_FUNC) &test1_rcpp_hello_world2, 0},
-    {"test1_make_mat", (DL_FUNC) &test1_make_mat, 2},
+    {"test1_count_ns", (DL_FUNC) &test1_count_ns, 5},
     {"test1_frate_counts", (DL_FUNC) &test1_frate_counts, 5},
-    {"test1_make_mat1", (DL_FUNC) &test1_make_mat1, 2},
-    {"test1_run_Pcpp", (DL_FUNC) &test1_run_Pcpp, 3},
-    {"test1_heaviside_thetacpp", (DL_FUNC) &test1_heaviside_thetacpp, 1},
-    {"test1_run_Tcpp", (DL_FUNC) &test1_run_Tcpp, 4},
     {"test1_run_TMcpp", (DL_FUNC) &test1_run_TMcpp, 5},
-    {"test1_tiling_arrcpp", (DL_FUNC) &test1_tiling_arrcpp, 7},
     {"test1_tiling_correlogramcpp", (DL_FUNC) &test1_tiling_correlogramcpp, 9},
     {"test1_tiling_correlogramcpp_index", (DL_FUNC) &test1_tiling_correlogramcpp_index, 11},
     {"test1_sttc_allspikes1", (DL_FUNC) &test1_sttc_allspikes1, 4},
