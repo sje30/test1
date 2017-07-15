@@ -1,3 +1,6 @@
 useDynLib(test1)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
+
+
+importFrom("stats", "ts")
