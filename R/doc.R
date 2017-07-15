@@ -24,6 +24,17 @@
 ##' @author Stephen Eglen
 "sttc_allspikes1"
 
-
-## I create the templates in this file by copying the function from
-## RcppExports.R into here and then deleting them once I've got the template.
+##' Compute STTC profile for two spike trains
+##'
+##' Compute the STTC profile for two spike trains
+##' @title 
+##' @param a Spike train 1
+##' @param b Spike train 2
+##' @param start Start time
+##' @param end End time
+##' @param dt coincidence window for STTC
+##' @param tau_sep step size for tau in [-tau_max, +tau_max]
+##' @param tau_max maximum tau value
+##' @return 
+##' @author Stephen Eglen
+"sttcp_ab"
