@@ -4,7 +4,7 @@
 \alias{sttc}
 \title{Compute STTC for a pair of spike trains}
 \usage{
-sttc(a, b, dt = 0.05, rec.time = NULL)
+sttc(a, b, dt = 0.05, rec_time = NULL)
 }
 \arguments{
 \item{a}{first spike train}
@@ -13,7 +13,7 @@ sttc(a, b, dt = 0.05, rec.time = NULL)
 
 \item{dt}{bin size in seconds}
 
-\item{rec.time}{2-element vector: start and end time}
+\item{rec_time}{2-element vector: start and end time}
 }
 \value{
 STTC a scalar bounded between -1 and +1.
@@ -28,10 +28,10 @@ of spike trains.  The method is defined in Cutts and Eglen (2014).
 \examples{
 a = c(1, 2, 3, 4, 5)
 b = a+0.01
-c = a+0.1
+c = a+0.5
 sttc(a, b)==1
 sttc(a, c)==0
 }
 \author{
-Stephen Eglen
+Stephen J Eglen
 }
