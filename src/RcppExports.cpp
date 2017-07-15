@@ -104,6 +104,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sttcp_ab
+NumericVector sttcp_ab(NumericVector a, NumericVector b, double start, double end, double dt, double tau_sep, double tau_max);
+RcppExport SEXP test1_sttcp_ab(SEXP aSEXP, SEXP bSEXP, SEXP startSEXP, SEXP endSEXP, SEXP dtSEXP, SEXP tau_sepSEXP, SEXP tau_maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type a(aSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type b(bSEXP);
+    Rcpp::traits::input_parameter< double >::type start(startSEXP);
+    Rcpp::traits::input_parameter< double >::type end(endSEXP);
+    Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
+    Rcpp::traits::input_parameter< double >::type tau_sep(tau_sepSEXP);
+    Rcpp::traits::input_parameter< double >::type tau_max(tau_maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(sttcp_ab(a, b, start, end, dt, tau_sep, tau_max));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"test1_count_ns", (DL_FUNC) &test1_count_ns, 5},
@@ -112,6 +129,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"test1_tiling_correlogramcpp", (DL_FUNC) &test1_tiling_correlogramcpp, 9},
     {"test1_tiling_correlogramcpp_index", (DL_FUNC) &test1_tiling_correlogramcpp_index, 11},
     {"test1_sttc_allspikes1", (DL_FUNC) &test1_sttc_allspikes1, 4},
+    {"test1_sttcp_ab", (DL_FUNC) &test1_sttcp_ab, 7},
     {NULL, NULL, 0}
 };
 

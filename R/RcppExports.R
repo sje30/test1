@@ -25,3 +25,7 @@ sttc_allspikes1 <- function(spikes, dt, beg, end) {
     .Call('test1_sttc_allspikes1', PACKAGE = 'test1', spikes, dt, beg, end)
 }
 
+sttcp_ab <- function(a, b, start, end, dt, tau_sep, tau_max) {
+    .Call('test1_sttcp_ab', PACKAGE = 'test1', a, b, start, end, dt, tau_sep, tau_max)
+}
+

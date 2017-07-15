@@ -22,3 +22,47 @@ sttc <- function(a, b, dt = 0.05, rec_time = NULL) {
   }
   run_TMcpp(dt, rec_time[1], rec_time[2], a, b)
 }
+
+
+##' Compute STTC profile for a pair of spike trains
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param a spike train 1
+##' @param b spike train 2
+##' @param dt time window for STTC
+##' @param tau_max maximum time shift
+##' @param tau_step step size in tau
+##' @param beg start of recording. When NULL use the minimum spike time from
+##' the two trains.
+##' @param end end of recording.  When NULL use the maximum spike time from
+##' the two trains.
+##' @return List containing the STTC profile.
+##' @author Stephen Eglen
+sttcp <- function(a, b, dt = 0.05, tau_max = 5, tau_step = 0.1,
+                  beg = NULL, end = NULL) {
+  spikes <- c(a, b)
+  nspikes <- c(length(a), length(b))
+  first_spike <- cumsum(c(1, length(a)))
+  if (is.null(beg))
+    beg <- min(spikes)
+  if (is.null(end))
+    end <- max(spikes)
+  
+  res <- tiling_correlogramcpp_index(spikes, 2,
+                               nspikes,
+                               first_spike,
+                               beg, end,
+                               dt,
+                               tau_step,
+                               tau_max,
+                               1,2)
+  taus = seq(from=-tau_max, to=tau_max, by=tau_step)
+  object = list(x=taus, y=res)
+  class(object) <- "sttcp"
+  object
+}
+
+plot.sttcp <- function(x) {
+  plot(x$x, x$y, xlab="tau (s)", ylab='STTC', type='l')
+}
