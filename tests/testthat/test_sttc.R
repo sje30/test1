@@ -144,3 +144,13 @@ for (i in 1:100) {
   y[middle] <- 0
   expect_true( all(abs(y) < 0.1)) # all other elements under threshold ~ 0.1
 }
+
+context("middle bin of sttcp() should equal sttp()")
+for (i in 1:100) {
+  t1 <- poisson.train(5000, 10, beg = 300)
+  t2 <- poisson.train(5000, 10, beg = 300)
+  y <- sttcp(t1, t2)$y
+  middle <- (length(y)+1)/2
+  c <- sttc(t1, t2)
+  expect_equal(y[middle], c)
+}
