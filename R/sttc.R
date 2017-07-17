@@ -48,17 +48,10 @@ sttcp <- function(a, b, dt = 0.05, tau_max = 5, tau_step = 0.1,
     beg <- min(spikes)
   if (is.null(end))
     end <- max(spikes)
-  
-  res <- tiling_correlogramcpp_index(spikes, 2,
-                               nspikes,
-                               first_spike,
-                               beg, end,
-                               dt,
-                               tau_step,
-                               tau_max,
-                               1,2)
+
+  y = sttcp_ab(a, b, beg, end, dt, tau_step, tau_max)
   taus = seq(from=-tau_max, to=tau_max, by=tau_step)
-  object = list(x=taus, y=res)
+  object = list(x=taus, y=y)
   class(object) <- "sttcp"
   object
 }
