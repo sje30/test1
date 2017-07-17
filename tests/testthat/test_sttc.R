@@ -125,3 +125,22 @@ expect_equal(sttc(a, b, dt = 1, rec_time = c(0, 3)), 1)
 expect_equal(sttc(a, b, dt = 1), NaN) #is this correct?!?
 
 
+context("STTCP profile should be antisymmetric")
+
+n <-  5000
+rates <- c(0.3, 1, 2, 5, 10, 30)
+for (r in rates) {
+  t1 <- poisson.train(n, r, beg = 300)
+  t2 <- poisson.train(n, r, beg = 300)
+  expect_equal( sttcp(t1, t2)$y, rev(sttcp(t2, t1)$y))
+}
+
+context("STTCP autocorrelation should have peak at 1, ~0 elsewhere")
+for (i in 1:100) {
+  t1 <- poisson.train(5000, 10, beg = 300)
+  y <- sttcp(t1, t1)$y
+  middle <- (length(y)+1)/2
+  expect_equal(y[middle], 1.0) # peak should equal 1 at tau=0
+  y[middle] <- 0
+  expect_true( all(abs(y) < 0.1)) # all other elements under threshold ~ 0.1
+}
