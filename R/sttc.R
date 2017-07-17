@@ -42,6 +42,13 @@ sttc <- function(a, b, dt = 0.05, rec_time = NULL) {
 ##' the two trains.
 ##' @return List containing the STTC profile.
 ##' @author Stephen Eglen
+##' @examples
+##' t1 <- -cumsum(log(runif(1000)) / 2)
+##' t2 <- -cumsum(log(runif(1000)) / 2)
+##' corr <- sttcp(t1, t2)
+##' plot(corr, main="cross correlation")
+##' autocorr <- sttcp(t1, t1)
+##' plot(autocorr, main="auto correlation")
 sttcp <- function(a, b, dt = 0.05, tau_max = 5, tau_step = 0.1,
                   beg = NULL, end = NULL) {
   spikes <- c(a, b)
@@ -59,6 +66,6 @@ sttcp <- function(a, b, dt = 0.05, tau_max = 5, tau_step = 0.1,
   object
 }
 
-plot.sttcp <- function(x) {
-  plot(x$x, x$y, xlab="tau (s)", ylab='STTC', type='l')
+plot.sttcp <- function(x, ...) {
+  plot(x$x, x$y, xlab="tau (s)", ylab='STTC', type='l', ...)
 }
