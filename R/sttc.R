@@ -26,8 +26,11 @@ sttc <- function(a, b, dt = 0.05, rec_time = NULL) {
 
 ##' Compute STTC profile for a pair of spike trains
 ##'
-##' .. content for \details{} ..
-##' @title 
+##' We extend the STTC to a profile (or correlogram) by shifting one
+##' spike train by amount tau, where tau varies in [-tau_max, +tau_max]
+##' in steps of tau_step.
+##' 
+##' @title Compute 
 ##' @param a spike train 1
 ##' @param b spike train 2
 ##' @param dt time window for STTC
