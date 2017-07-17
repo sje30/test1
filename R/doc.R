@@ -26,8 +26,8 @@
 
 ##' Compute STTC profile for two spike trains
 ##'
-##' Compute the STTC profile for two spike trains
-##' @title 
+##' Compute the STTC profile for two spike trains using C++.
+##' @title Compute STTC profile for two spike trains
 ##' @param a Spike train 1
 ##' @param b Spike train 2
 ##' @param start Start time
@@ -35,6 +35,6 @@
 ##' @param dt coincidence window for STTC
 ##' @param tau_sep step size for tau in [-tau_max, +tau_max]
 ##' @param tau_max maximum tau value
-##' @return 
+##' @return obj  An object of type "sttcp", containing the tau values and correlations.
 ##' @author Stephen Eglen
 "sttcp_ab"
